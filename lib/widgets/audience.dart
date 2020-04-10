@@ -196,11 +196,8 @@ class _AgoraAudienceState extends State<AgoraAudience> {
         children: <Widget>[
         AgoraRenderWidget(uid3),
         _panel(),
-        ],
-              
+        ],      
       ),
-      
     );
-
   }
 }
