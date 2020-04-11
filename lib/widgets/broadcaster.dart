@@ -2,14 +2,14 @@ import 'package:agora_live/utils/app_id.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 
-class AgoraAudience extends StatefulWidget {
+class Broadcaster extends StatefulWidget {
   final String channelName;
-  AgoraAudience(this.channelName);
+  Broadcaster(this.channelName);
   @override
-  _AgoraAudienceState createState() => _AgoraAudienceState();
+  _BroadcasterState createState() => _BroadcasterState();
 }
 
-class _AgoraAudienceState extends State<AgoraAudience> {
+class _BroadcasterState extends State<Broadcaster> {
   static final _users = <int>[];
   final _infoStrings = <String>[];
   int newUid = 0;
@@ -60,8 +60,9 @@ class _AgoraAudienceState extends State<AgoraAudience> {
     await AgoraRtcEngine.create(appID);
     await AgoraRtcEngine.enableVideo();
     AgoraRtcEngine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    AgoraRtcEngine.setClientRole(ClientRole.Audience);
+    AgoraRtcEngine.setClientRole(ClientRole.Broadcaster);
     
+    //AgoraRtcEngine.startPreview();
   }
 
   /// agora event handlers
@@ -146,7 +147,7 @@ class _AgoraAudienceState extends State<AgoraAudience> {
       padding: const EdgeInsets.symmetric(vertical: 48),
       alignment: Alignment.bottomCenter,
       child: FractionallySizedBox(
-        heightFactor: 0.5,
+        heightFactor: 0.3,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 48),
           child: ListView.builder(
@@ -176,7 +177,7 @@ class _AgoraAudienceState extends State<AgoraAudience> {
                         ),
                         child: Text(
                           _infoStrings[index],
-                          style: TextStyle(color: Colors.blueGrey),
+                          style: TextStyle(color: Colors.blueGrey, fontSize: 15),
                         ),
                       ),
                     )
@@ -198,9 +199,11 @@ class _AgoraAudienceState extends State<AgoraAudience> {
         AgoraRtcEngine.createNativeView((viewId){
           _viewId = viewId;
         AgoraRtcEngine.joinChannel(null, widget.channelName, null, uid2);
-        AgoraRtcEngine.setupRemoteVideo(_viewId, VideoRenderMode.Fit, uid3);
+        AgoraRtcEngine.startPreview();
+        AgoraRtcEngine.enableVideo();
+        AgoraRtcEngine.setupLocalVideo(_viewId, VideoRenderMode.Fit);
+        
         }),
-        AgoraRenderWidget(uid3),
         _panel(),
         ],      
       ),
