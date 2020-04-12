@@ -1,4 +1,4 @@
-# Agora 1 to 1 Video Calling Demo
+# Agora Video Broadcasting Demo
 
 This tutorial describes how to create an Agora account and build a sample video broadcasting app with Agora's Flutter SDK.
 
