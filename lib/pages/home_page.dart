@@ -115,18 +115,21 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   Future<void> onJoinLive() async{
-    await _handleCameraAndMicPermission();
+    await _handleCameraAndMic(Permission.camera);
+        await _handleCameraAndMic(Permission.microphone);
     await Navigator.push(context, 
                             MaterialPageRoute(
                               builder: (context)=> WatchLive()
                               )
                             );
   }
-  Future<void> _handleCameraAndMicPermission() async{
-    await PermissionHandler().requestPermissions([PermissionGroup.camera,PermissionGroup.microphone]);
+  Future<void> _handleCameraAndMic(Permission permission) async {
+    final status = await permission.request();
+    print(status);
   }
   Future<void> onCreateLive() async{
-    await _handleCameraAndMicPermission();
+    await _handleCameraAndMic(Permission.camera);
+        await _handleCameraAndMic(Permission.microphone);
     await Navigator.push(context, 
                             MaterialPageRoute(
                               builder: (context)=> GoLive()
